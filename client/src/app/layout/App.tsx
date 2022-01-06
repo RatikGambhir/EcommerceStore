@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Product } from "../model/product";
+import { useState } from "react";
 import Catalog from "../../features/catalog/Catalog";
 import { Container, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import Header from "./header";
@@ -12,13 +11,20 @@ function App() {
 	const theme = createTheme({
 		palette: {
 			mode: paletteType,
+			background: {
+				default: paletteType === "light" ? "#eaeaea" : "#121212",
+			},
 		},
 	});
+
+	function changeTheme() {
+		setDarkMode(!darkMode);
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Header />
+			<Header darkMode={darkMode} setDarkMode={changeTheme} />
 			<Container>
 				<Catalog />
 			</Container>
