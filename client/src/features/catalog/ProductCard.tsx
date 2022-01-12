@@ -1,5 +1,9 @@
+import { LoadingButton } from "@mui/lab";
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import service from "../../app/api/service";
+import { useStoreContext } from "../../app/context/StoreContext";
 import { Product } from "../../app/model/product";
 
 interface Props {
@@ -7,6 +11,17 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
+	const [loading, setLoading] = useState(false);
+	const { setBasket } = useStoreContext();
+
+	function AddItemToCart(productId: number) {
+		setLoading(true);
+		service.Basket.addItem(productId)
+			.then((basket) => setBasket(basket))
+			.catch((error) => console.log(error))
+			.finally(() => setLoading(false));
+	}
+
 	return (
 		<Card>
 			<CardHeader
@@ -26,7 +41,9 @@ export default function ProductCard({ product }: Props) {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size="small">Add To Cart</Button>
+				<LoadingButton loading={loading} onClick={() => AddItemToCart(product.id)} size="small">
+					Add To Cart
+				</LoadingButton>
 				<Button component={Link} to={`/catalog/${product.id}`} size="small">
 					View
 				</Button>
