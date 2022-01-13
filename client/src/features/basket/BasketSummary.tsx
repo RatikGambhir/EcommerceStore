@@ -16,7 +16,7 @@ export default function BasketSummary() {
 					<TableBody>
 						<TableRow>
 							<TableCell colSpan={2}>Subtotal</TableCell>
-							<TableCell align="right">$ {formateCurrency(subtotal)}</TableCell>
+							<TableCell align="right"> {formateCurrency(subtotal)}</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell colSpan={2}>Delivery fee*</TableCell>
@@ -24,7 +24,7 @@ export default function BasketSummary() {
 						</TableRow>
 						<TableRow>
 							<TableCell colSpan={2}>Total</TableCell>
-							<TableCell align="right">$ {formateCurrency(subtotal + deliveryFee)}</TableCell>
+							<TableCell align="right">{formateCurrency(subtotal + deliveryFee)}</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell>

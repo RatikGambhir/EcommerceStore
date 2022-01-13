@@ -1,4 +1,4 @@
-import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -6,18 +6,49 @@ import { Product } from "../../app/model/product";
 import service from "../../app/api/service";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import { useStoreContext } from "../../app/context/StoreContext";
+import { LoadingButton } from "@mui/lab";
 
 export default function ProductDetails() {
+	const { basket, setBasket, removeItem } = useStoreContext();
 	const { id } = useParams<{ id: string }>();
 	const [products, setProducts] = useState<Product | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [itemQuantity, setItemQuantity] = useState(0);
+	const [submitting, setSubmitting] = useState(false);
+
+	const item = basket?.items.find((i) => i.productId === products?.id);
 
 	useEffect(() => {
+		if (item) setItemQuantity(item.quantity);
 		service.Catalog.details(parseInt(id))
 			.then((response) => setProducts(response))
 			.catch((error) => console.log(error))
 			.finally(() => setLoading(false));
-	}, [id]);
+	}, [id, item]);
+
+	function inputChange(event: any) {
+		if (event.target.value >= 0) {
+			setItemQuantity(parseInt(event.target.value));
+		}
+	}
+
+	function handleUpdateCard() {
+		setSubmitting(true);
+		if (!item || itemQuantity > item?.quantity) {
+			const updatedQuantity = item ? itemQuantity - item.quantity : itemQuantity;
+			service.Basket.addItem(products?.id!, updatedQuantity)
+				.then((basket) => setBasket(basket))
+				.catch((error) => console.log(error))
+				.finally(() => setSubmitting(false));
+		} else {
+			const updatedQuantity = item.quantity - itemQuantity;
+			service.Basket.removeItem(products?.id!, updatedQuantity)
+				.then(() => removeItem(products?.id!, updatedQuantity))
+				.catch((error) => console.log(error))
+				.finally(() => setSubmitting(false));
+		}
+	}
 
 	if (loading) return <LoadingComponent message="Loading Product details..." />;
 
@@ -60,6 +91,25 @@ export default function ProductDetails() {
 						</TableBody>
 					</Table>
 				</TableContainer>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField variant="outlined" type="number" label="Quantity in Cart" fullWidth value={itemQuantity} onChange={inputChange} />
+					</Grid>
+					<Grid item xs={6}>
+						<LoadingButton
+							disabled={item?.quantity === itemQuantity || (!item && itemQuantity === 0)}
+							onClick={handleUpdateCard}
+							loading={submitting}
+							sx={{ height: "55px" }}
+							color="primary"
+							size="large"
+							variant="contained"
+							fullWidth
+						>
+							{item ? "Update Quantity" : "Add To Cart"}
+						</LoadingButton>
+					</Grid>
+				</Grid>
 			</Grid>
 		</Grid>
 	);
