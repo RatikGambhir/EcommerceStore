@@ -1,32 +1,27 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../app/model/product";
-import service from "../../app/api/service";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { removeItem, setBasket } from "../basket/basketSlice";
+import { addBasketItemAsync, removeBasketItemAsync } from "../basket/basketSlice";
+import { getProductsByIdAsync, productSelector } from "./catalogSlice";
 
 export default function ProductDetails() {
-	const { basket } = useAppSelector((state) => state.basket);
+	const { basket, status } = useAppSelector((state) => state.basket);
 	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
-	const [products, setProducts] = useState<Product | null>(null);
-	const [loading, setLoading] = useState(true);
+	const products = useAppSelector((state) => productSelector.selectById(state, id));
 	const [itemQuantity, setItemQuantity] = useState(0);
-	const [submitting, setSubmitting] = useState(false);
+	const { status: productStatus } = useAppSelector((state) => state.catalog);
 
 	const item = basket?.items.find((i) => i.productId === products?.id);
 
 	useEffect(() => {
 		if (item) setItemQuantity(item.quantity);
-		service.Catalog.details(parseInt(id))
-			.then((response) => setProducts(response))
-			.catch((error) => console.log(error))
-			.finally(() => setLoading(false));
-	}, [id, item]);
+		if (!products) dispatch(getProductsByIdAsync(parseInt(id)));
+	}, [id, item, dispatch, products]);
 
 	function inputChange(event: any) {
 		if (event.target.value >= 0) {
@@ -35,23 +30,16 @@ export default function ProductDetails() {
 	}
 
 	function handleUpdateCard() {
-		setSubmitting(true);
 		if (!item || itemQuantity > item?.quantity) {
 			const updatedQuantity = item ? itemQuantity - item.quantity : itemQuantity;
-			service.Basket.addItem(products?.id!, updatedQuantity)
-				.then((basket) => dispatch(setBasket(basket)))
-				.catch((error) => console.log(error))
-				.finally(() => setSubmitting(false));
+			dispatch(addBasketItemAsync({ productId: products?.id!, quantity: updatedQuantity }));
 		} else {
 			const updatedQuantity = item.quantity - itemQuantity;
-			service.Basket.removeItem(products?.id!, updatedQuantity)
-				.then(() => dispatch(removeItem({ productId: products?.id!, quantity: updatedQuantity })))
-				.catch((error) => console.log(error))
-				.finally(() => setSubmitting(false));
+			dispatch(removeBasketItemAsync({ productId: products?.id!, quantity: updatedQuantity }));
 		}
 	}
 
-	if (loading) return <LoadingComponent message="Loading Product details..." />;
+	if (productStatus.includes("pending")) return <LoadingComponent message="Loading Product details..." />;
 
 	if (!products) return <NotFound />;
 
@@ -100,7 +88,7 @@ export default function ProductDetails() {
 						<LoadingButton
 							disabled={item?.quantity === itemQuantity || (!item && itemQuantity === 0)}
 							onClick={handleUpdateCard}
-							loading={submitting}
+							loading={status.includes("pending")}
 							sx={{ height: "55px" }}
 							color="primary"
 							size="large"

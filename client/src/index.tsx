@@ -5,7 +5,6 @@ import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { StoreProvider } from "./app/context/StoreContext";
 import { store } from "./app/store/configureStore";
 import { Provider } from "react-redux";
 
