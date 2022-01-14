@@ -1,16 +1,17 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../app/model/product";
 import service from "../../app/api/service";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { removeItem, setBasket } from "../basket/basketSlice";
 
 export default function ProductDetails() {
-	const { basket, setBasket, removeItem } = useStoreContext();
+	const { basket } = useAppSelector((state) => state.basket);
+	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
 	const [products, setProducts] = useState<Product | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -38,13 +39,13 @@ export default function ProductDetails() {
 		if (!item || itemQuantity > item?.quantity) {
 			const updatedQuantity = item ? itemQuantity - item.quantity : itemQuantity;
 			service.Basket.addItem(products?.id!, updatedQuantity)
-				.then((basket) => setBasket(basket))
+				.then((basket) => dispatch(setBasket(basket)))
 				.catch((error) => console.log(error))
 				.finally(() => setSubmitting(false));
 		} else {
 			const updatedQuantity = item.quantity - itemQuantity;
 			service.Basket.removeItem(products?.id!, updatedQuantity)
-				.then(() => removeItem(products?.id!, updatedQuantity))
+				.then(() => dispatch(removeItem({ productId: products?.id!, quantity: updatedQuantity })))
 				.catch((error) => console.log(error))
 				.finally(() => setSubmitting(false));
 		}
