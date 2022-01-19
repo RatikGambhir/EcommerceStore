@@ -49,7 +49,7 @@ namespace API.Controllers
                 return product;
         }
 
-        [HttpGet("filters")]
+        [HttpGet("filter")]
 
         public async Task<IActionResult> GetFilters()
         {

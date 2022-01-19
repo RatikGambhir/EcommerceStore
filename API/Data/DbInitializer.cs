@@ -20,7 +20,7 @@ namespace API.Data
                     Price = 20000,
                     Picture = "/images/products/rams.jpg",
                     Brand = "Los Angeles Rams",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -30,7 +30,7 @@ namespace API.Data
                     Price = 15000,
                     Picture = "/images/products/bills.jpg",
                     Brand = "Buffalo Bills",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -41,7 +41,7 @@ namespace API.Data
                     Price = 18000,
                     Picture = "/images/products/steelers.jpg",
                     Brand = "Pittsburgh Steelers",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -52,7 +52,7 @@ namespace API.Data
                     Price = 30000,
                     Picture = "/images/products/colts.jpg",
                     Brand = "Indianapolis Colts",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -63,7 +63,7 @@ namespace API.Data
                     Price = 25000,
                     Picture = "/images/products/ravens.jpg",
                     Brand = "Baltimore Ravens",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -74,7 +74,7 @@ namespace API.Data
                     Price = 12000,
                     Picture = "/images/products/texans.jpg",
                     Brand = "Houston Texans",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -162,7 +162,7 @@ namespace API.Data
                     Price = 18000,
                     Picture = "/images/products/bengals.jpg",
                     Brand = "Cincinnati Benglas",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -216,7 +216,7 @@ namespace API.Data
                     Price = 18000,
                     Picture = "/images/products/jaguars.jpg",
                     Brand = "Jacksonville Jaguars",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
@@ -315,7 +315,7 @@ namespace API.Data
                     Price = 18000,
                     Picture = "/images/products/eagles.jpg",
                     Brand = "Philadelphia Eagles",
-                    Type = "Jersey",
+                    Type = "Jerseys",
                     QuantityInStock = 100
                 },
                 new Product
