@@ -16,13 +16,13 @@ export default function ProductCard({ product }: Props) {
 	return (
 		<Card>
 			<CardHeader
-				avatar={<Avatar sx={{ bgcolor: "secondary.main" }}>{product.name.charAt(0).toUpperCase()}</Avatar>}
+				avatar={<Avatar sx={{ backgroundColor: "primary.main" }}>{product.name.charAt(0).toUpperCase()}</Avatar>}
 				title={product.name}
 				titleTypographyProps={{
 					sx: { fontWeight: "bold", color: "primary.main" },
 				}}
 			/>
-			<CardMedia sx={{ height: 200, backgroundSize: "contain", bgcolor: "primary.light" }} component="img" height="140" image={product.picture} alt="green iguana" title={product.name} />
+			<CardMedia sx={{ height: 250, backgroundSize: "contain", bgcolor: "primary.light" }} component="img" height="130" image={product.picture} alt="green iguana" title={product.name} />
 			<CardContent>
 				<Typography gutterBottom variant="h5" color="secondary" sx={{ color: "green" }}>
 					${(product.price / 100).toFixed(2)}

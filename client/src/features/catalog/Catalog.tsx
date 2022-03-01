@@ -29,7 +29,7 @@ export default function Catalog() {
 		if (!filtersLoaded) dispatch(getFiltersByType());
 	}, [dispatch, filtersLoaded]);
 
-	if (status.includes("pending") || !metaData) return <LoadingComponent message="Loading Products..." />;
+	if (!filtersLoaded) return <LoadingComponent message="Loading Products..." />;
 
 	return (
 		<Grid container spacing={4}>
@@ -60,7 +60,7 @@ export default function Catalog() {
 			</Grid>
 			<Grid item xs={3} />
 			<Grid item xs={9}>
-				<AppPagination metaData={metaData} onPageChange={(page: number) => dispatch(setProductParams({ pageNumber: page }))} />
+				{metaData && <AppPagination metaData={metaData} onPageChange={(page: number) => dispatch(setProductParams({ pageNumber: page }))} />}
 			</Grid>
 		</Grid>
 	);

@@ -1,16 +1,25 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { request } from "http";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { PaginationResponse } from "../model/pagination";
+import { store } from "../store/configureStore";
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
+axios.interceptors.request.use((config: any) => {
+	const token = store.getState().account.user?.token;
+	if (token) config.headers.Authorization = `Bearer ${token}`;
+	return config;
+});
+
 axios.interceptors.response.use(
 	(response) => {
 		console.log(response);
 		const pagination = response.headers["pagination"];
+		response.headers["Access-Control-Allow-Origin"] = "*";
 		if (pagination) {
 			response.data = new PaginationResponse(response.data, JSON.parse(pagination));
 			console.log(response);
@@ -77,10 +86,27 @@ const Basket = {
 	removeItem: (productId: number, quanity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quanity}`),
 };
 
+const Account = {
+	login: (values: any) => requests.post("account/login", values),
+	register: (values: any) => requests.post("account/register", values),
+	currentUser: () => requests.get("account/currentUser"),
+};
+
+const News = {
+	getNews: () => requests.get("News"),
+};
+
+const Feedback = {
+	submitFeedback: (values: any) => requests.post("Feedback", values),
+};
+
 const service = {
 	Catalog,
 	TestErrors,
 	Basket,
+	Account,
+	News,
+	Feedback,
 };
 
 export default service;

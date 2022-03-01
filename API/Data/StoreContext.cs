@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Entities.Order;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class StoreContext : DbContext
+    public class StoreContext : IdentityDbContext<User, Role, int>
     {
         public StoreContext(DbContextOptions options) : base(options) {
 
@@ -15,5 +18,28 @@ namespace API.Data
 
         public DbSet<Product> Products {get; set;}
         public DbSet<Basket> Baskets {get; set;}
+
+        public DbSet<FeedBack> Feeback {get; set;}
+
+        public DbSet<Order> Orders {get; set;}
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+
+      builder.Entity<User>()
+            .HasOne(a => a.Address)
+            .WithOne()
+            .HasForeignKey<UsersAddress>(a => a.Id)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+
+      builder.Entity<Role>().HasData(
+          new Role{Id = 1, Name = "Member", NormalizedName = "MEMBER"},
+          new Role{Id = 2, Name = "Admin", NormalizedName = "ADMIN"}
+      );
+
     }
+  }
 }

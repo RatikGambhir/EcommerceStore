@@ -2,6 +2,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Badge, Box, IconButton, List, ListItem, Switch, Toolbar, Typography } from "@mui/material";
 import { NavLink, Link } from "react-router-dom";
 import { useAppSelector } from "../store/configureStore";
+import SignedInMenu from "../layout/SignedInMenu";
 
 interface Props {
 	darkMode: boolean;
@@ -9,9 +10,9 @@ interface Props {
 }
 
 const midLinks = [
-	{ title: "catalog", path: "/catalog" },
+	{ title: "shop", path: "/catalog" },
 	{ title: "about", path: "/about" },
-	{ title: "contact", path: "/contact" },
+	{ title: "feedback", path: "/feedback" },
 ];
 
 const rightLinks = [
@@ -33,6 +34,7 @@ const navStyles = {
 
 export default function Header({ darkMode, setDarkMode }: Props) {
 	const { basket } = useAppSelector((state) => state.basket);
+	const { user } = useAppSelector((state) => state.account);
 	const itemCount = basket?.items.reduce((sum, item) => (sum += item.quantity), 0);
 
 	return (
@@ -58,13 +60,17 @@ export default function Header({ darkMode, setDarkMode }: Props) {
 							<ShoppingCart />
 						</Badge>
 					</IconButton>
-					<List sx={{ display: "flex" }}>
-						{rightLinks.map(({ title, path }) => (
-							<ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-								{title.toUpperCase()}
-							</ListItem>
-						))}
-					</List>
+					{user ? (
+						<SignedInMenu />
+					) : (
+						<List sx={{ display: "flex" }}>
+							{rightLinks.map(({ title, path }) => (
+								<ListItem component={NavLink} to={path} key={path} sx={navStyles}>
+									{title.toUpperCase()}
+								</ListItem>
+							))}
+						</List>
+					)}
 				</Box>
 			</Toolbar>
 		</AppBar>

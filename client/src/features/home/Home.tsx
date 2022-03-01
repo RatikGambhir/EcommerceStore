@@ -1,5 +1,35 @@
-import { Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Article } from "../../app/model/news";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import ArticleList from "./ArticleList";
+import { getNewsAsync } from "./newsSlice";
+import { Grid, Typography } from "@mui/material";
 
-export default function AboutPage() {
-	return <Typography variant="h2">Home Page</Typography>;
+interface Props {
+	articles: Article;
+}
+
+export default function HomePage({ articles }: Props) {
+	const { news } = useAppSelector((state) => state.news);
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(getNewsAsync());
+	}, [dispatch]);
+
+	return (
+		<>
+			<Typography variant="h2" gutterBottom={true}>
+				Welcome to the the NFL store! here is where you can find anything NFL
+			</Typography>
+			<Grid container spacing={12} columnSpacing={{ sm: 2 }} marginBottom={20}>
+				<Grid item>
+					<ArticleList />
+				</Grid>
+			</Grid>
+			<a style={{ display: "block", textAlign: "center", paddingBottom: "20px" }} href={news?.link.href}>
+				Click Here view articles in Detail
+			</a>
+		</>
+	);
 }

@@ -25,7 +25,7 @@ namespace API.Controllers
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDTO>> GetBasket()
     {
-      var basket = await RetrieveBasket();
+      var basket = await RetrieveBasket(getBuyerID());
 
       if (basket == null) return NotFound();
       return MapBasketToDTO(basket);
@@ -37,7 +37,7 @@ namespace API.Controllers
     [HttpPost]
 
         public async Task<ActionResult<BasketDTO>> AddItemToBasket(int productId, int quantity) {
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(getBuyerID());
             if(basket == null) basket = CreateBasket(); 
             var products = await _context.Products.FindAsync(productId);
             if(products == null) return BadRequest(new ProblemDetails {
@@ -54,7 +54,7 @@ namespace API.Controllers
    
     [HttpDelete]
         public async Task<ActionResult> RemoveBasketItem(int productId, int quantity) {
-                var basket = await RetrieveBasket();
+                var basket = await RetrieveBasket(getBuyerID());
                 if(basket == null) return NotFound();
                 basket.RemoveItem(productId, quantity);
                 var result = await _context.SaveChangesAsync() > 0;
@@ -63,19 +63,32 @@ namespace API.Controllers
                     Title= "Cannot delete item"
                 });
         }
-        private async Task<Basket> RetrieveBasket()
+        private async Task<Basket> RetrieveBasket(string buyerId)
     {
+        if(string.IsNullOrEmpty(buyerId)) {
+          Response.Cookies.Delete("buyerId");
+          return null;
+        }
+
       return await _context.Baskets
                       .Include(i => i.Items)
                       .ThenInclude(p => p.Product)
-                                  .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+                                  .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
     }
+
+        private string getBuyerID() {
+          return User.Identity?.Name ?? Request.Cookies["buyerId"];
+        }
 
          private Basket CreateBasket()
             {
-                    var buyerId = Guid.NewGuid().ToString();
+                    var buyerId = User.Identity?.Name;
+                    if(string.IsNullOrEmpty(buyerId)) {
+                      buyerId = Guid.NewGuid().ToString();
                     var cookieOptions = new CookieOptions{IsEssential = true, Expires = DateTime.Now.AddDays(30)};
                     Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+                    }
+                    
 
                     var basket = new Basket {BuyerId = buyerId};
                     _context.Baskets.Add(basket);

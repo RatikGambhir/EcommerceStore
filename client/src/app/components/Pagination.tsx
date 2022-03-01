@@ -11,10 +11,10 @@ export default function AppPagination({ metaData, onPageChange }: Props) {
 	const { currentPage, totalCount, totalPages, pageSize } = metaData;
 	return (
 		<Box display="flex" justifyContent="space-between" alignItems="center">
-			<Typography>
+			<Typography style={{ marginBottom: "20px" }}>
 				Displaying {(currentPage - 1) * pageSize + 1}-{currentPage * pageSize > totalCount ? totalCount : currentPage * pageSize} of {totalCount} items
 			</Typography>
-			<Pagination color="secondary" size="large" count={totalPages} page={currentPage} onChange={(e, page) => onPageChange(page)} />
+			<Pagination style={{ marginBottom: "20px" }} color="secondary" size="large" count={totalPages} page={currentPage} onChange={(e, page) => onPageChange(page)} />
 		</Box>
 	);
 }
