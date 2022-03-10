@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { getFiltersByType, getProductsAsync, productSelector } from "./catalogSlice";
-import { Box, Grid, Pagination, Paper, Typography } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import ProductSearch from "./ProductSearch";
 import RadioButtonFilter from "../../app/components/RadioButton";
 import { setProductParams } from "./catalogSlice";
@@ -18,7 +18,7 @@ const sortOptions = [
 
 export default function Catalog() {
 	const products = useAppSelector(productSelector.selectAll);
-	const { productsLoaded, status, filtersLoaded, types, productParams, metaData } = useAppSelector((state) => state.catalog);
+	const { productsLoaded, filtersLoaded, types, productParams, metaData } = useAppSelector((state) => state.catalog);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {

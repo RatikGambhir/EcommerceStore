@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { Product } from "../../app/model/product";
 import ProductCard from "../../features/catalog/ProductCard";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { useAppSelector } from "../../app/store/configureStore";
 import ProductCardSkeleton from "./ProductSkeleton";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { NFLNews } from "../../app/model/news";
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import service from "../../app/api/service";
 
 interface NewsState {

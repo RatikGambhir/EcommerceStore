@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
-import thunk from "redux-thunk";
 import service from "../../app/api/service";
 import { Basket } from "../../app/model/basket";
 import { toast } from "react-toastify";
@@ -72,7 +70,7 @@ export const basketSlice = createSlice({
 		});
 		builder.addCase(removeBasketItemAsync.fulfilled, (state, action) => {
 			const { productId, quantity } = action.meta.arg;
-			const itemIndex = state.basket?.items.findIndex((i) => i.productId == productId);
+			const itemIndex = state.basket?.items.findIndex((i) => i.productId === productId);
 			if (itemIndex === -1 || itemIndex === undefined) return;
 			state.basket!.items[itemIndex].quantity -= quantity!;
 			if (state.basket!.items[itemIndex].quantity === 0) state.basket!.items.splice(itemIndex, 1);

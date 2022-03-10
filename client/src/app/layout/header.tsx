@@ -39,7 +39,7 @@ export default function Header({ darkMode, setDarkMode }: Props) {
 
 	return (
 		<AppBar position="static" sx={{ mb: 4 }}>
-			<Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+			<Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "secondary" }}>
 				<Box display="flex" alignItems="center">
 					<img src="/download.png" style={{ height: "50px", backgroundColor: "inherit", padding: "5px", backgroundImage: "none", alignContent: "left" }} alt="National Football League"></img>
 					<Typography variant="h6" component={NavLink} exact to="/" sx={navStyles}>

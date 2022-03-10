@@ -1,4 +1,4 @@
-import { Button, Container, Divider, Link, Paper, Typography } from "@mui/material";
+import { Button, Container, Divider, Paper, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 export default function NotFound() {
