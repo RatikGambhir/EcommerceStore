@@ -41,14 +41,14 @@ export default function Login() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Grid container component={Paper} sx={{ height: "100vh" }}>
+			<Grid container component={Paper} sx={{ height: "100vh", width: "75vw" }}>
 				<Grid
 					item
 					xs={false}
 					sm={4}
 					md={7}
 					sx={{
-						backgroundImage: "url(https://source.unsplash.com/random)",
+						backgroundImage: "url(/images/products/nflposter.jpeg)",
 						backgroundRepeat: "no-repeat",
 						backgroundColor: (t) => (t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900]),
 						backgroundSize: "cover",
@@ -107,7 +107,7 @@ export default function Login() {
 									</Link> */}
 								</Grid>
 								<Grid item>
-									<Link to="/register">{"Don't have an account? Sign Up"}</Link>
+									<Link to="/register">{"Don't have an account? Sign Up!"}</Link>
 								</Grid>
 							</Grid>
 						</Box>

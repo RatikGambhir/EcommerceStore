@@ -99,6 +99,12 @@ const Feedback = {
 	submitFeedback: (values: any) => requests.post("Feedback", values),
 };
 
+const Orders = {
+	listAllOrders: () => requests.get("orders"),
+	getSingleOrder: (id: number) => requests.get(`orders/${id}`),
+	orderProducts: (values: any) => requests.post("orders", values),
+};
+
 const service = {
 	Catalog,
 	TestErrors,
@@ -106,6 +112,7 @@ const service = {
 	Account,
 	News,
 	Feedback,
+	Orders,
 };
 
 export default service;

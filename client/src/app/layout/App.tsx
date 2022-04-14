@@ -19,6 +19,8 @@ import { getUserBasketAsync } from "../../features/basket/basketSlice";
 import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
 import { getCurrentUser } from "../../features/account/accountSlice";
+import Orders from "../../features/orders/Order";
+import OrderDetails from "../../features/orders/OrderDetails";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -70,6 +72,8 @@ function App() {
 					<Route path="/server-error" component={ServerError} />
 					<Route path="/basket" component={BasketPage} />
 					<Route path="/checkout" component={Checkout} />
+					<Route path="/orders" component={Orders} />
+					<Route path="/orderdetails/:id" component={OrderDetails} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 					<Route component={NotFound} />
