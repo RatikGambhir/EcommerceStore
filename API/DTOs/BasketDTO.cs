@@ -11,5 +11,7 @@ namespace API.DTOs
         public string buyerId { get; set; }
 
         public List<BasketItemDTO> Items { get; set; }
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret {get; set;}
     }
 }
