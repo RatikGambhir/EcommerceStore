@@ -6,7 +6,7 @@ interface Props extends RouteProps {
 	component: ComponentType<RouteComponentProps<any>> | ComponentType<any>;
 }
 
-function PublicRoute({ component: Component, ...rest }: Props) {
+export default function PublicRoute({ component: Component, ...rest }: Props) {
 	const { user } = useAppSelector((state) => state.account);
 
 	return (
@@ -18,7 +18,7 @@ function PublicRoute({ component: Component, ...rest }: Props) {
 				) : (
 					<Redirect
 						to={{
-							pathname: "/home",
+							pathname: "/login",
 							state: { from: props.location },
 						}}
 					/>

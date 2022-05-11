@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch } from "../../app/store/configureStore";
@@ -17,6 +17,7 @@ const theme = createTheme();
 export default function Login() {
 	const history = useHistory();
 	const dispatch = useAppDispatch();
+	const location = useLocation<any>();
 
 	const {
 		register,
@@ -29,7 +30,7 @@ export default function Login() {
 	async function submitForm(data: FieldValues) {
 		try {
 			await dispatch(signInUser(data));
-			history.push("/");
+			history.push(location?.state?.from.pathname || "/");
 		} catch (error) {
 			console.log(error);
 		}

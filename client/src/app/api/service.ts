@@ -105,6 +105,10 @@ const Orders = {
 	orderProducts: (values: any) => requests.post("orders", values),
 };
 
+const Payments = {
+	sendPaymentIntent: () => requests.post('payments', {})
+}
+
 const service = {
 	Catalog,
 	TestErrors,
@@ -113,6 +117,7 @@ const service = {
 	News,
 	Feedback,
 	Orders,
+	Payments
 };
 
 export default service;
