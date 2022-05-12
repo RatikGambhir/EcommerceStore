@@ -10,6 +10,8 @@ namespace API.Entities
 
       public string Name { get; set; }
 
+      public string LinkedIn {get; set;}
+
       public string FavoritePart { get; set; }
 
       public string LeastFavoritePart { get; set; }

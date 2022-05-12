@@ -100,6 +100,7 @@ export default function CheckoutPage() {
 	}
 
 	const handleNext = async (data: FieldValues) => {
+		console.log(data, 'this is checkout data');
 		if (activeStep === steps.length - 1) {
 			await submitOrder(data);
 		} else {

@@ -14,10 +14,10 @@ export default function AddressForm() {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12} sm={12}>
-					<AppTextInput control={control} name="fullName" label="What was your favorite part of the site?" />
+					<AppTextInput control={control} name="favoritePart" label="What was your favorite part of the site?" />
 				</Grid>
 				<Grid item xs={12}>
-					<AppTextInput control={control} name="address1" label="What was your least favorite part of the site (be honest!)" />
+					<AppTextInput control={control} name="leastFavoritePart" label="What was your least favorite part of the site (be honest!)" />
 				</Grid>
 			</Grid>
 		</>

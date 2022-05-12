@@ -7,9 +7,10 @@ import FinalThoughts from "./FinalThoughts";
 import NameEntry from "./NameEntry";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import service from "../../app/api/service";
 //import { validationSchema } from "./checkoutValidation";
 
-const steps = ["Shipping address", "Review your order", "Payment details"];
+const steps = ["Tell me how I did", "What's your favorite?", "Anything else?", "Let's connect!"];
 
 function getStepContent(step: number) {
 	switch (step) {
@@ -36,11 +37,18 @@ export default function CheckoutPage() {
 		//	resolver: yupResolver(currentValidationSchema),
 	});
 
-	const handleNext = (data: FieldValues) => {
-		if (activeStep === 0) {
-			console.log(data);
+	async function submitFeedback(data: FieldValues) {
+	const response =	await service.Feedback.submitFeedback(data);
+	console.log(response);
+	}
+
+	const handleNext = async (data: FieldValues) => {
+		console.log(data, 'this is checkout data');
+		if (activeStep === steps.length - 1) {
+			await submitFeedback(data);
+		} else {
+			setActiveStep(activeStep + 1);
 		}
-		setActiveStep(activeStep + 1);
 	};
 
 	const handleBack = () => {

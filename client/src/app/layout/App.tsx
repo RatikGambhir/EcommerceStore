@@ -5,7 +5,7 @@ import Header from "./header";
 import { Route, Switch } from "react-router-dom";
 import HomePage from "../../features/home/Home";
 import ProductDetails from "../../features/catalog/ProductDetails";
-import FeedBackPage from "../../features/contact/ContactPage";
+import FeedBackPage from "../../features/contact/ContactStepper";
 import AboutPage from "../../features/about/AboutPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,7 +33,6 @@ function App() {
 			await dispatch(getCurrentUser());
 			await dispatch(getUserBasketAsync());
 		} catch (error: any) {
-			console.log(error);
 		}
 	}, [dispatch]);
 

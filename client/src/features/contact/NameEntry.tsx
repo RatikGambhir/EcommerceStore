@@ -9,7 +9,9 @@ export default function AddressForm() {
 	return (
 		<>
 			<Typography variant="h6" gutterBottom>
-				Would you like to put your name? *Not Required
+				Would you like to put your name? <span><Typography variant="subtitle1">
+				(Optional)
+						</Typography></span>
 			</Typography>
 
 			<Grid container spacing={3}>
@@ -17,7 +19,7 @@ export default function AddressForm() {
 					<AppTextInput control={control} name="fullName" label="First Name" />
 				</Grid>
 				<Grid item xs={12}>
-					<AppTextInput control={control} name="address1" label="Last Name" />
+					<AppTextInput control={control} name="linkedIn" label="Let's connect on LinkedIn!" />
 				</Grid>
 			</Grid>
 		</>

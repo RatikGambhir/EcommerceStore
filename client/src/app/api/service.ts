@@ -16,12 +16,10 @@ axios.interceptors.request.use((config: any) => {
 
 axios.interceptors.response.use(
 	(response) => {
-		console.log(response);
 		const pagination = response.headers["pagination"];
 		response.headers["Access-Control-Allow-Origin"] = "*";
 		if (pagination) {
 			response.data = new PaginationResponse(response.data, JSON.parse(pagination));
-			console.log(response);
 			return response;
 		}
 		return response;
@@ -53,7 +51,6 @@ axios.interceptors.response.use(
 			default:
 				break;
 		}
-		console.log("caught by interceptor");
 		return Promise.reject(error.response);
 	}
 );
