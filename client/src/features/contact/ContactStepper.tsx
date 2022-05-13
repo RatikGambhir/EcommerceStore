@@ -38,12 +38,10 @@ export default function CheckoutPage() {
 	});
 
 	async function submitFeedback(data: FieldValues) {
-	const response =	await service.Feedback.submitFeedback(data);
-	console.log(response);
+		await service.Feedback.submitFeedback(data).then(() => setActiveStep(activeStep + 1)).catch((error) => console.log('didnt work', error));
+	
 	}
-
 	const handleNext = async (data: FieldValues) => {
-		console.log(data, 'this is checkout data');
 		if (activeStep === steps.length - 1) {
 			await submitFeedback(data);
 		} else {
@@ -72,9 +70,9 @@ export default function CheckoutPage() {
 					{activeStep === steps.length ? (
 						<>
 							<Typography variant="h5" gutterBottom>
-								Thank you for submitting your feedback! .
+								Thank you for submitting your feedback!
 							</Typography>
-							<Typography variant="subtitle1">Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has shipped.</Typography>
+							<Typography variant="subtitle1">I appreciate you taking the time to submit your feedback.</Typography>
 						</>
 					) : (
 						<form onSubmit={methods.handleSubmit(handleNext)}>
