@@ -26,7 +26,6 @@ export default function SignedInMenu() {
 				{user?.email}
 			</Button>
 			<Menu anchorEl={anchorEl} open={open} onClose={handleClose} TransitionComponent={Fade}>
-				<MenuItem onClick={handleClose}>Profile</MenuItem>
 				<MenuItem component={Link} to="/orders">
 					My Orders
 				</MenuItem>
