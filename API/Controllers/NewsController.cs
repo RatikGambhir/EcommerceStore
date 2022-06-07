@@ -32,7 +32,6 @@ namespace API.Controllers
 
                 result = JsonConvert.DeserializeObject<NFLNews>(responseAsString);
                 
-                Console.WriteLine(result);
     
                 return Ok(result);
     }
