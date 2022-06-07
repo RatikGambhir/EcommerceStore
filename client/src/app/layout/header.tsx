@@ -11,7 +11,6 @@ interface Props {
 
 const midLinks = [
 	{ title: "shop", path: "/catalog" },
-	{ title: "about", path: "/about" },
 	{ title: "feedback", path: "/feedback" },
 ];
 

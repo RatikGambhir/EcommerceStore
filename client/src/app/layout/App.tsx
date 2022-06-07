@@ -6,7 +6,6 @@ import { Route, Switch } from "react-router-dom";
 import HomePage from "../../features/home/Home";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import FeedBackPage from "../../features/contact/ContactStepper";
-import AboutPage from "../../features/about/AboutPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ServerError from "../../app/errors/ServerError";
@@ -67,7 +66,6 @@ function App() {
 					<Route exact path="/" component={HomePage} />
 					<Route exact path="/catalog" component={Catalog} />
 					<Route path="/catalog/:id" component={ProductDetails} />
-					<Route path="/about" component={AboutPage} />
 					<Route path="/feedback" component={FeedBackPage} />
 					<Route path="/server-error" component={ServerError} />
 					<Route path="/basket" component={BasketPage} />
