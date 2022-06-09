@@ -20,16 +20,13 @@ export default function HomePage({ articles }: Props) {
 	return (
 		<>
 			<Typography variant="h2" gutterBottom={true}>
-				Welcome to the the NFL store! here is where you can find anything NFL
+				What's happening around the league?
 			</Typography>
 			<Grid container spacing={12} columnSpacing={{ sm: 2 }} marginBottom={20}>
 				<Grid item>
 					<ArticleList />
 				</Grid>
 			</Grid>
-			<a style={{ display: "block", textAlign: "center", paddingBottom: "20px" }} href={news?.link.href}>
-				Click Here view articles in Detail
-			</a>
 		</>
 	);
 }
